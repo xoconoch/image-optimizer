@@ -235,7 +235,7 @@ var rewriteUrl = (url, options) => {
   const rawExt = ext.replace(".", "");
   if (options.extensions.includes(rawExt)) {
     const newExt = `.${options.format}`;
-    const newBasePath = basePath.substring(0, basePath.length - ext.length) + newExt;
+    const newBasePath = (basePath.substring(0, basePath.length - ext.length) + newExt).toLowerCase();
     return newBasePath + rest;
   }
   return url;
@@ -332,7 +332,7 @@ var ImageOptimizer = (userOptions) => {
         const srcPath = path.join(srcDir, file);
         const ext = path.extname(file);
         const baseNameWithoutExt = file.substring(0, file.length - ext.length);
-        const destRelativePath = `${baseNameWithoutExt}.${options.format}`;
+        const destRelativePath = `${baseNameWithoutExt}.${options.format}`.toLowerCase();
         const destPath = path.join(destDir, destRelativePath);
         const needOptimization = await shouldOptimize(srcPath, destPath);
         if (needOptimization) {
@@ -364,7 +364,7 @@ var ImageOptimizer = (userOptions) => {
           0,
           relativeSrcPath.length - ext.length
         );
-        const destRelativePath = `${baseNameWithoutExt}.${options.format}`;
+        const destRelativePath = `${baseNameWithoutExt}.${options.format}`.toLowerCase();
         const destPath = path.join(destDir, destRelativePath);
         if (event.type === "delete") {
           try {

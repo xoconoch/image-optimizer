@@ -63,6 +63,20 @@ describe("ImageOptimizer Transformer (Remark)", () => {
 
     expect(String(file)).toContain("/photos/hiking/tree.png");
   });
+
+  it("rewrites local image extensions and lowercases the path in markdown", async () => {
+    const ctx = createCtx();
+    const plugin = ImageOptimizer({ format: "webp", extensions: ["jpg", "png"] });
+    const markdownPlugins = plugin.markdownPlugins?.(ctx) ?? [];
+
+    const file = await unified()
+      .use(remarkParse)
+      .use(markdownPlugins)
+      .use(remarkStringify)
+      .process("![hike](/Photos/Hiking/IMG_6033.PNG)");
+
+    expect(String(file)).toContain("/photos/hiking/img_6033.webp");
+  });
 });
 
 describe("ImageOptimizer Transformer (Rehype)", () => {
@@ -92,5 +106,19 @@ describe("ImageOptimizer Transformer (Rehype)", () => {
       .process('<img src="https://example.com/tree.png" alt="hike">');
 
     expect(String(file)).toContain('src="https://example.com/tree.png"');
+  });
+
+  it("rewrites local image srcs and lowercases the path in HTML", async () => {
+    const ctx = createCtx();
+    const plugin = ImageOptimizer({ format: "webp", extensions: ["jpg", "png"] });
+    const htmlPlugins = plugin.htmlPlugins?.(ctx) ?? [];
+
+    const file = await unified()
+      .use(rehypeParse, { fragment: true })
+      .use(htmlPlugins)
+      .use(rehypeStringify)
+      .process('<img src="/Photos/Hiking/IMG_6033.PNG" alt="hike">');
+
+    expect(String(file)).toContain('src="/photos/hiking/img_6033.webp"');
   });
 });
