@@ -1,13 +1,7 @@
-export { ExampleTransformer } from "./transformer";
-export { ExampleFilter } from "./filter";
-export { ExampleEmitter } from "./emitter";
+export { ImageOptimizer } from "./image-optimizer";
 export { default as ExampleComponent } from "./components/ExampleComponent";
 
-export type {
-  ExampleTransformerOptions,
-  ExampleFilterOptions,
-  ExampleEmitterOptions,
-} from "./types";
+export type { ImageOptimizerOptions } from "./types";
 
 export type { ExampleComponentOptions } from "./components/ExampleComponent";
 

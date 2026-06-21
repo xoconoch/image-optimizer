@@ -1,7 +1,7 @@
 {
-  "name": "@quartz-community/plugin-template",
+  "name": "@quartz-community/image-optimizer",
   "version": "0.1.0",
-  "description": "Template repository for Quartz community plugins.",
+  "description": "Quartz community plugin to optimize local images and update markdown/HTML paths.",
   "type": "module",
   "license": "MIT",
   "author": "Quartz Community",
@@ -54,6 +54,7 @@
   },
   "peerDependencies": {
     "preact": "^10.0.0",
+    "sharp": "^0.33.5",
     "vfile": "^6.0.3"
   },
   "peerDependenciesMeta": {
@@ -81,7 +82,9 @@
     "mdast-util-find-and-replace": "^3.0.2",
     "preact": "^10.28.2",
     "prettier": "^3.6.2",
+    "rehype-parse": "^9.0.0",
     "rehype-slug": "^6.0.0",
+    "rehype-stringify": "^10.0.0",
     "remark-gfm": "^4.0.1",
     "remark-parse": "^11.0.0",
     "remark-stringify": "^11.0.0",
@@ -91,33 +94,46 @@
     "unified": "^11.0.5",
     "unist-util-visit": "^5.1.0",
     "vfile": "^6.0.3",
-    "vitest": "^2.1.9"
+    "vitest": "^2.1.9",
+    "sharp": "^0.33.5"
   },
   "quartz": {
-    "name": "plugin-template",
-    "displayName": "Plugin Template",
-    "category": "transformer",
+    "name": "image-optimizer",
+    "displayName": "Image Optimizer",
+    "category": [
+      "transformer",
+      "emitter"
+    ],
     "version": "1.0.0",
     "quartzVersion": ">=5.0.0",
+    "requiresInstall": true,
     "dependencies": [],
     "defaultOrder": 50,
     "defaultEnabled": true,
-    "defaultOptions": {},
-    "optionSchema": {
-      "highlightToken": {
-        "type": "enum",
-        "values": [
-          "==",
-          "**",
-          "~~"
-        ]
-      }
+    "defaultOptions": {
+      "quality": 80,
+      "effort": 4,
+      "format": "webp",
+      "extensions": [
+        "jpg",
+        "jpeg",
+        "png",
+        "webp",
+        "tiff"
+      ]
     },
-    "components": {
-      "ExampleComponent": {
-        "displayName": "Example Component",
-        "defaultPosition": "right",
-        "defaultPriority": 50
+    "optionSchema": {
+      "quality": {
+        "type": "number"
+      },
+      "effort": {
+        "type": "number"
+      },
+      "format": {
+        "type": "string"
+      },
+      "extensions": {
+        "type": "array"
       }
     }
   },

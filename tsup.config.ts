@@ -88,6 +88,8 @@ const SINGLETON_EXTERNALS = [
   "vfile",
   "vfile/*",
   "unified",
+  "sharp",
+  "sharp/*",
 ];
 
 export default defineConfig({
@@ -106,7 +108,7 @@ export default defineConfig({
   splitting: false,
   outDir: "dist",
   platform: "node",
-  noExternal: [/.*/],
+  noExternal: [/^(?!(?:preact|@jackyzha0\/quartz|vfile|unified|sharp)(?:\/|$)).*$/],
   external: SINGLETON_EXTERNALS,
   banner: {
     js: 'import { createRequire } from "module"; const require = createRequire(import.meta.url);',
